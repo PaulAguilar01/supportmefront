@@ -6,9 +6,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-
-          Hola Mundo , Hanabi Team
-
+        Hi Hanabi Team
       </header>
     </div>
   );
