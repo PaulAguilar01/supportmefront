@@ -8,7 +8,7 @@ function App() {
       <header className="App-header">
         Hi Hanabi Team
       </header>
-      2020
+      2020 - TW
     </div>
   );
 }
