@@ -1,9 +1,9 @@
 import React from 'react';
-import '../styles/App.css';
+import '../styles/MainPage.css';
 
-function App() {
+export default () => {
   return (
-    <div className="App">
+    <div className="Main-page">
       <header className="App-header">
         Hi Hanabi Team
       </header>
@@ -11,5 +11,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
