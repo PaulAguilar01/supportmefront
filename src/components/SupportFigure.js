@@ -1,19 +1,15 @@
-import React from 'react';
-import '../styles/MainPage.css';
-
+import React from "react";
 import Header from "./template/DefaultHeader";
 import Menu from "./template/DefaultMenu";
 
 export default () => {
   return (
-    <div className="Main-page">
-      <Header />
-      <Menu />
+      <div className="Main-page">
+        <Header />
+        <Menu />
         <div className="App-header">
-          Hi Hanabi Team
-          2020 - TW
+          Pagina de Figuras en construccion
         </div>
-    </div>
+      </div>
   );
 }
-
