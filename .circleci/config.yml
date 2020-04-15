@@ -6,7 +6,6 @@ orbs:
 jobs:
   deploy:
     steps:
-      - checkout
       - run:
           name: Deploy Master to Heroku
           command: |
