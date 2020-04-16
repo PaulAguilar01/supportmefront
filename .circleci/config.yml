@@ -54,6 +54,7 @@ jobs:
     machine: true
     steps:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - checkout
       - run:
           name: Deploy frontend to staging
@@ -93,4 +94,3 @@ workflows:
       - deploy-production:
           requires:
             - approve-deploy-to-production
-          filters: *filter-only-master
