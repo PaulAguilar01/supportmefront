@@ -2,3 +2,10 @@
   flex-direction: row;
   display: flex;
 }
+
+@media only screen and (max-width: 840px) {
+  .principal-container {
+    flex-direction: column;
+    display: flex;
+  }
+}

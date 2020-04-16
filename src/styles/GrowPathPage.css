@@ -21,16 +21,47 @@
 
 .first-button {
   margin-right: 3em;
+  border: 2px solid #F0F0F0;
+}
+
+.second-button {
+  background-color: #11aa58;
+  color: white;
 }
 
 button {
-  background-color: #4CAF50;
   border: none;
-  color: white;
   padding: 10px 24px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   border-radius: 18px;
+}
+
+.btn.focus, .btn:focus {
+  outline: 0;
+  box-shadow: none!important;
+}
+
+@media only screen and (max-width: 839px) {
+  .block-container {
+    width: 100%;
+    padding-bottom: 20px;
+  }
+
+  .second-block {
+    padding: 10px 20px;
+  }
+
+  .third-block {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .first-button {
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
 }

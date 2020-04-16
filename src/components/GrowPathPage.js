@@ -25,7 +25,7 @@ export default () => {
           className="btn btn-default first-button"
           onClick={handleSupportFiguresClick}>Understand Support Figures</button>
         <button
-          className="btn btn-default">What do I need</button>
+          className="btn btn-default second-button">What do I need</button>
       </div>
     </div>
   );

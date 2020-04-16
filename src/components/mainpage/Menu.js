@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import '../../styles/mainpage/Menu.css';
 
 export default () => {
-  const activeStyle = {color:"#3CB371"};
+  const activeStyle = {color:"#11aa58"};
 
   return (
     <div className='menu-container'>
