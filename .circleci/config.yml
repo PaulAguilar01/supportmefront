@@ -10,9 +10,8 @@ attach-workspace: &attach-workspace
 
 version: 2.1
 jobs:
-  working_directory: ~/repo
-  machine: true
   build:
+    working_directory: ~/repo
     docker:
       - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
     steps:
@@ -20,7 +19,6 @@ jobs:
       - run: echo "hello world" # run the `echo` command
   test:
     working_directory: ~/repo
-    machine: true
     docker:
       - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
     steps:
