@@ -48,7 +48,6 @@ jobs:
           name: Running unit tests
           command: |
             npm rebuild node-sass npm run run-tests
-
   deploy-staging:
     working_directory: ~/repo
     machine: true
@@ -58,7 +57,6 @@ jobs:
           name: Deploy frontend to staging
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master
-
   deploy-production:
     working_directory: ~/repo
     machine: true
@@ -68,7 +66,6 @@ jobs:
           name: Deploy frontend to production
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
 workflows:
   version: 2.1
   build-and-test:
@@ -92,3 +89,4 @@ workflows:
       - deploy-production:
           requires:
             - approve-deploy-to-production
+          filters: *filter-only-master
