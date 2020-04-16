@@ -11,18 +11,49 @@ attach-workspace: &attach-workspace
     at: ~/repo
 
 jobs:
-  unit-test:
-    docker:
-      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+  checkout-install-dependencies:
+    working_directory: ~/repo
+    machine: true
     steps:
-      - checkout # check out the code in the project directory
+      - checkout
       - run:
-          name: run test
+          name: Prepare workspace
           command: |
-            npm test
+            rm -rf .git
+            chmod -R ugo+rwx ~/repo
+      - run:
+          name: Install dependencies
+          command: docker run --rm -w /repo -v $PWD:/repo circleci/node:8.11-stretch sh -c "npm install && chmod -R ugo+rwx ./node_modules"
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+  unit-tests:
+    working_directory: ~/repo
+    parallelism: 3
+    docker:
+      - image: circleci/node:8.11-stretch
+    steps:
+      - *attach-workspace
+      - run:
+          name: Running unit tests
+          command: |
+            react-scripts test
+
+#  unit-test:
+#    docker:
+#      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+#    steps:
+#      - checkout # check out the code in the project directory
+#      - run:
+#          name: run test
+#          command: |
+#            npm test
 workflows:
   version: 2.1
   build-and-test:
     jobs:
+      - checkout-install-dependencies
       - unit-test:
           filters: *filter-only-master
+          requires: checkout-install-dependencies
