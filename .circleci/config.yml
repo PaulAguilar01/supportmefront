@@ -4,12 +4,6 @@ orbs:
   heroku: circleci/heroku@1.0.1
 
 jobs:
-  deploy:
-    - heroku/deploy-via-git:
-        filters:
-          branches:
-            only: master
-
   build:
     steps:
       - run:
@@ -18,9 +12,12 @@ jobs:
             npm test
 
 workflows:
-  test_and_deploy:
+  heroku_deploy:
     jobs:
       - build
-      - deploy:
+      - heroku/deploy-via-git:
+          filters:
+            branches:
+              only: master
           requires:
             -build
