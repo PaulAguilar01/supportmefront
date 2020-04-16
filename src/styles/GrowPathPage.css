@@ -1,3 +1,36 @@
 .block-container {
-  width: 70%;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 80px;
+}
+
+.treeImage {
+  width: 60%;
+}
+
+.first-block, .second-block {
+  text-align: center;
+}
+
+.third-block {
+  margin-top: 40px;
+}
+
+.first-button {
+  margin-right: 3em;
+}
+
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 18px;
 }
