@@ -1,19 +1,20 @@
 import React from 'react';
+import { BrowserRouter } from "react-router-dom";
+import Header from "./mainpage/Header";
+import Menu from "./mainpage/Menu";
+import Router from '../router';
 import '../styles/MainPage.css';
-
-import Header from "./template/DefaultHeader";
-import Menu from "./template/DefaultMenu";
 
 export default () => {
   return (
-    <div className="Main-page">
+    <div>
       <Header />
-      <Menu />
-        <div className="App-header">
-          Hi Hanabi Team
-          2020 - TW
-        </div>
+      <div className='principal-container'>
+        <BrowserRouter>
+          <Menu />
+          <Router />
+        </BrowserRouter>
+      </div>
     </div>
   );
 }
-
