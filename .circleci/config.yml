@@ -56,4 +56,5 @@ workflows:
       - checkout-install-dependencies
       - unit-test:
           filters: *filter-only-master
-          requires: checkout-install-dependencies
+          requires:
+            - checkout-install-dependencies
