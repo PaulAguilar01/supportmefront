@@ -53,8 +53,6 @@ jobs:
     working_directory: ~/repo
     machine: true
     steps:
-<<<<<<< HEAD
-<<<<<<< HEAD
       - checkout
       - run:
           name: Deploy frontend to staging
