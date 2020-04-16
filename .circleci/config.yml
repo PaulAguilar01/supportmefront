@@ -83,6 +83,7 @@ workflows:
       - deploy-staging:
           requires:
             - unit-test
+            - security-scan
       - approve-deploy-to-production:
           type: approval
           requires:
