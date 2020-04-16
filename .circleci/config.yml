@@ -28,6 +28,15 @@ jobs:
           root: ~/repo
           paths:
             - .
+  security-scan:
+    working_directory: ~/repo
+    machine: true
+    steps:
+      - *attach-workspace
+      - run:
+          name: Security Scan with Hawkeye
+          command: docker run --rm --name="hawkeye" -v $PWD:/target stono/hawkeye
+
   unit-test:
     working_directory: ~/repo
     parallelism: 3
@@ -65,6 +74,9 @@ workflows:
   build-and-test:
     jobs:
       - checkout-install-dependencies
+      - security-scan:
+          requires:
+            - checkout-install-dependencies
       - unit-test:
           requires:
             - checkout-install-dependencies
@@ -75,6 +87,7 @@ workflows:
           type: approval
           requires:
             - deploy-staging
+          filters: *filter-only-master
       - deploy-production:
           requires:
             - approve-deploy-to-production
