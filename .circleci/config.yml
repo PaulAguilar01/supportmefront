@@ -4,7 +4,7 @@ aliases:
   - &filter-only-master
     branches:
       only:
-        - 3-include-pipeline
+        - master
 
 attach-workspace: &attach-workspace
   attach_workspace:
