@@ -18,3 +18,14 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run: npm test
+
+  workflows:
+    version: 1
+    build-and-test:
+      jobs:
+        -build:
+          filters: *filter-only-master
+        -test:
+          requires:
+            - build
+          filters: *filter-only-master
