@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Running unit tests
           command: |
-            react-scripts test
+            npm rebuild node-sass CI=true npm run run-tests
 
 #  unit-test:
 #    docker:

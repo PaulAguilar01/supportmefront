@@ -16,7 +16,8 @@
     "start": "PORT=$PORT react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "run-tests": "npm run build-css > /dev/null 2>&1 && react-scripts test --env=jsdom"
   },
   "eslintConfig": {
     "extends": "react-app"
