@@ -1,34 +1,12 @@
-aliases:
-  - &filter-only-master
-    branches:
-      only:
-        - master
+version: 2.1
 
-image-defaults: &image-defaults
-  docker:
-    - image: circleci/node:8.11-stretch
-
-version: 2
-jobs:
-  build:
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - persist_to_workspace:
-          root: ~/repo
-          paths:  .
-      - run:
-          name: install dependencies
-          command: |
-            npm install
-      - run:
-          name: run test
-          command: |
-            npm test
+orbs:
+  heroku: circleci/heroku@1.0.1
 
 workflows:
-  version: 2.1
-  build-and-test:
+  heroku_deploy:
     jobs:
-      - build:
-        filters: *filter-only-master
+      - heroku/deploy-via-git:
+        filters:
+          branches:
+            only: master
