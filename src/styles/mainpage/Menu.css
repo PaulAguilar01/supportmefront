@@ -1,9 +1,16 @@
 .menu-container {
-  width: 30%;
+  width: 20%;
+  padding-top: 50px;
 }
 
 ul {
   list-style-type:none;
+  line-height: 2.5em;
+  padding-inline-start: 9em;
+}
+
+li {
+  font-weight: 500;
 }
 
 a {
