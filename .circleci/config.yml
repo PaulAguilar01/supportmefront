@@ -1,3 +1,5 @@
+version: 2.1
+
 aliases:
   - &filter-only-master
     branches:
@@ -8,12 +10,11 @@ attach-workspace: &attach-workspace
   attach_workspace:
     at: ~/repo
 
-version: 2.1
 jobs:
   test:
     working_directory: ~/repo
-#    docker:
-#      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+    docker:
+      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
     machine: true
     steps:
       - checkout # check out the code in the project directory
@@ -23,7 +24,7 @@ jobs:
             npm test
 
   workflows:
-    version: 2
+    version: 2.1
     build-and-test:
       jobs:
         - test:
