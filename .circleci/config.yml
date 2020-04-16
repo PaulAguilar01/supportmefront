@@ -29,9 +29,8 @@ jobs:
     version: 2
     build-and-test:
       jobs:
-        -build:
-          filters: *filter-only-master
-        -test:
+        - build
+        - test:
           requires:
             - build
           filters: *filter-only-master
