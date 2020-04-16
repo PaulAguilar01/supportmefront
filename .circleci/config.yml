@@ -40,21 +40,43 @@ jobs:
           command: |
             npm rebuild node-sass npm run run-tests
 
-#  unit-test:
-#    docker:
-#      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
-#    steps:
-#      - checkout # check out the code in the project directory
-#      - run:
-#          name: run test
-#          command: |
-#            npm test
+  deploy-staging:
+    working_directory: ~/repo
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Deploy frontend to staging
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master
+
+  deploy-production:
+    working_directory: ~/repo
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Deploy frontend to production
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
 workflows:
   version: 2.1
   build-and-test:
     jobs:
       - checkout-install-dependencies
       - unit-test:
-          filters: *filter-only-master
           requires:
             - checkout-install-dependencies
+      - deploy-staging:
+          requires:
+            - unit-test
+      - approve-deploy-to-production:
+          type: approval
+          requires:
+            - deploy-staging
+      - deploy-production:
+          requires:
+            - approve-deploy-to-production
+          filters: *filter-only-master
+
