@@ -104,7 +104,7 @@ workflows:
 #      - security-scan:
 #          requires:
 #            - checkout-install-dependencies
-      - build
+      - build:
         requires:
           - prepare-space
       - unit-test:
