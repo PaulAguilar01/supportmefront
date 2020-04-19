@@ -56,21 +56,20 @@ jobs:
 #          path: test-results
 #      - store_artifacts:
 #                path: /tmp/app
-#  build:
-#    working_directory: ~/repo
-#    docker:
-#      - image: circleci/node:10c
-#    steps:
-#      - run:
-#        name: Package Application
-#        command: |
-#          yarn run build --yes
-#          mkdir -p /tmp/app
-#          cp -avR build/* /tmp/app
-#          cp Procfile /tmp/app
-#          cp .circleci/server.js /tmp/app
-#          cp .circleci/package.json /tmp/app
-#
+  build:
+    docker:
+      - image: circleci/node:10c
+    steps:
+      - run:
+          name: Package Application
+          command: |
+            yarn run build --yes
+            mkdir -p /tmp/app
+            cp -avR build/* /tmp/app
+            cp Procfile /tmp/app
+            cp .circleci/server.js /tmp/app
+            cp .circleci/package.json /tmp/app
+
 #  deploy-staging:
 #    working_directory: ~/repo
 #    machine: true
@@ -104,9 +103,9 @@ workflows:
 #      - security-scan:
 #          requires:
 #            - checkout-install-dependencies
-#      - build:
-#        requires:
-#          - prepare-space
+      - build:
+        requires:
+          - prepare-space
 #      - unit-test:
 #          requires:
 #            - build
