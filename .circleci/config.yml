@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Running unit tests
           command: |
-            npm test
+            npm install test
       - store_artifacts:
           path: test-results
       - store_test_results:
