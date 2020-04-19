@@ -58,7 +58,7 @@ jobs:
 #                path: /tmp/app
   build:
     docker:
-      - image: circleci/node:10c
+      - image: circleci/node:10
     steps:
       - run:
           name: Package Application
