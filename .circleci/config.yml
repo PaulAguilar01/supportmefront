@@ -68,7 +68,7 @@ jobs:
             cp -avR build/* /tmp/app
             cp Procfile /tmp/app
             cp .circleci/server.js /tmp/app
-            cp ../.circleci/package.json /tmp/app
+            cp .circleci/package.json /tmp/app
 
 #  deploy-staging:
 #    working_directory: ~/repo
@@ -83,7 +83,7 @@ jobs:
 #            git init
 #            git add .
 #            git commit -m "Deploy"
-#            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master -f
+#            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master -f
 ##          command: |
 ##            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master
 #  deploy-production:
@@ -106,6 +106,7 @@ workflows:
       - build:
           requires:
             - prepare-space
+          filters: *filter-only-master
 #      - unit-test:
 #          requires:
 #            - build
