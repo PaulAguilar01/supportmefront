@@ -106,7 +106,6 @@ workflows:
       - build:
           requires:
             - unit-test
-          filters: *filter-only-master
 
 #      - deploy-staging:
 #          requires:
