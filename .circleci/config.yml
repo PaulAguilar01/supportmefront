@@ -4,7 +4,7 @@ aliases:
   - &filter-only-master
     branches:
       only:
-        - 3-include-pipeline
+        - master
 orbs:
   heroku: circleci/heroku@1.0.1
 
