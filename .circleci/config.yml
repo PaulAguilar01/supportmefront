@@ -104,8 +104,8 @@ workflows:
 #          requires:
 #            - checkout-install-dependencies
       - build:
-        requires:
-          - prepare-space
+          requires:
+            - prepare-space
 #      - unit-test:
 #          requires:
 #            - build
