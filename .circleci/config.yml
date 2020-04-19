@@ -39,23 +39,20 @@ jobs:
 #          name: Security Scan with Hawkeye
 #          command: docker run --rm --name="hawkeye" -v $PWD:/target stono/hawkeye
 #
-#  unit-test:
-#    working_directory: ~/repo
-#    parallelism: 3
-#    docker:
-#      - image: circleci/node:10
-#    steps:
-#      - *attach-workspace
-#      - run:
-#          name: Running unit tests
-#          command: |
-#            npm test
-#      - store_artifacts:
-#          path: test-results
-#      - store_test_results:
-#          path: test-results
-#      - store_artifacts:
-#                path: /tmp/app
+  unit-test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run:
+          name: Running unit tests
+          command: |
+            npm test
+      - store_artifacts:
+          path: test-results
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+                path: /tmp/app
   build:
     docker:
       - image: circleci/node:10
@@ -103,13 +100,14 @@ workflows:
 #      - security-scan:
 #          requires:
 #            - checkout-install-dependencies
-      - build:
+      - unit-test:
           requires:
             - prepare-space
+      - build:
+          requires:
+            - unit-test
           filters: *filter-only-master
-#      - unit-test:
-#          requires:
-#            - build
+
 #      - deploy-staging:
 #          requires:
 #            - unit-test
