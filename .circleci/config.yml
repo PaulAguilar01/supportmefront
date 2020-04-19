@@ -68,7 +68,7 @@ jobs:
             cp -avR build/* /tmp/app
             cp Procfile /tmp/app
             cp .circleci/server.js /tmp/app
-            cp .circleci/package.json /tmp/app
+            cp ../.circleci/package.json /tmp/app
 
 #  deploy-staging:
 #    working_directory: ~/repo
