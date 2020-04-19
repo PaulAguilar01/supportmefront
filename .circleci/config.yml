@@ -43,7 +43,7 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
-      - *attach-workspace
+      - checkout
       - run:
           name: Running unit tests
           command: |
