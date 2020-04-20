@@ -24,8 +24,6 @@ jobs:
             - "node_modules"
   unit-test:
     working_directory: ~/repo
-    docker:
-      - image: circleci/node:10
     steps:
       - checkout
       - run:
@@ -40,24 +38,6 @@ jobs:
           root: ~/repo
           paths:
             - .
-  package-application:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - run:
-          name: Package Application
-          command: |
-            npm install
-            yarn run build --yes
-            mkdir -p /tmp/app
-            cp -avR build/* /tmp/app
-            cp .circleci/server.js /tmp/app
-            cp .circleci/package.json /tmp/app
-      - store_artifacts:
-          path: /tmp/app
-
   deploy-staging:
     working_directory: ~/repo
     docker:
@@ -115,9 +95,12 @@ workflows:
   Build and Test:
     jobs:
       - build-and-install-dependencies
-      - deploy-staging:
+      - unit-test:
           requires:
             - build-and-install-dependencies
+      - deploy-staging:
+          requires:
+            - unit-test
       - approve-deploy-to-production:
           type: approval
           requires:
