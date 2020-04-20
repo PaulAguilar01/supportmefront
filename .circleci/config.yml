@@ -58,14 +58,14 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
-      - *attach-workspace
+      - checkout
       - run:
           name: Package Application
           command: |
             yarn run build --yes
             mkdir -p /tmp/app
             cp -avR build/* /tmp/app
-#            cp Procfile /tmp/app
+            cp Procfile /tmp/app
             cp .circleci/server.js /tmp/app
             cp .circleci/package.json /tmp/app
 
