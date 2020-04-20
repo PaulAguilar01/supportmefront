@@ -18,10 +18,10 @@ jobs:
           key: v1-repo-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
-      - run:
-          name: Run tests
-          # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
-          command: npm test --passWithNoTests # replace with `yarn test` if using yarn
+#      - run:
+#          name: Run tests
+#          # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
+#          command: npm test --passWithNoTests # replace with `yarn test` if using yarn
       - run:
           name: Package Application
           command: |
