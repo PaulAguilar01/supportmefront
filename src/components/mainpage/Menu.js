@@ -6,7 +6,9 @@ export default () => {
   const activeStyle = {color:"#11aa58"};
 
   return (
-    <div className='menu-container'>
+    <nav id="page-nav">
+      <input type="checkbox" id="hamburger"/>
+      <label htmlFor="hamburger">&#9776;</label>
       <ul>
         <li>
           <NavLink to="/" activeStyle={activeStyle} exact>Growth path</NavLink>
@@ -15,6 +17,6 @@ export default () => {
           <NavLink to="/support-figure" activeStyle={activeStyle} >Support figures</NavLink>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 }

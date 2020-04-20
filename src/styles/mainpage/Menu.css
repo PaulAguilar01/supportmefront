@@ -1,24 +1,76 @@
-.menu-container {
-  width: 20%;
+#page-nav {
+  width: 25%;
   padding-top: 50px;
+  position: sticky;
+  top: 0;
 }
 
-ul {
-  list-style-type:none;
-  line-height: 2.5em;
-  padding-inline-start: 9em;
+/* Hide Hamburger */
+#page-nav label, #hamburger {
+  display: none;
 }
 
-li {
+/* Menu Items */
+#page-nav ul {
+  list-style-type: none;
+  line-height: 1.5em;
+  padding-inline-start: 8em;
+  padding-right: 2em;
+}
+
+#page-nav ul li {
+  padding: 10px;
+  box-sizing: border-box;
   font-weight: 500;
 }
-
-a {
-  text-decoration: none;
+#page-nav ul li a {
   color: black;
+  text-decoration: none;
 }
 
-@media only screen and (max-width: 840px) {
-
+@media screen and (max-width: 1412px){
+  #page-nav ul {
+    padding-inline-start: 1.8em;
+    padding-right: 0;
+  }
 }
 
+@media screen and (max-width: 839px){
+  #page-nav {
+    width: 100%;
+    padding-top: 0;
+    background: black;
+  }
+  /* Show Hamburger */
+  #page-nav label {
+    display: inline-block;
+    color: #fff;
+    background: #11aa58;
+    font-style: normal;
+    font-size: 1.2em;
+    padding: 10px;
+  }
+
+  /* Break down menu items into vertical */
+  #page-nav ul li {
+    display: block;
+  }
+
+  #page-nav ul li {
+    border-top: 1px solid #333;
+  }
+
+  /* Toggle show/hide menu on checkbox click */
+  #page-nav ul {
+    display: none;
+    margin: 0;
+    padding: 0;
+  }
+  #page-nav input:checked ~ ul {
+    display: block;
+  }
+
+  #page-nav ul li a {
+    color: white;
+  }
+}
