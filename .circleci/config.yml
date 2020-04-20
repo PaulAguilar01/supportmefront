@@ -4,6 +4,11 @@ orbs:
 attach-workspace: &attach-workspace
   attach_workspace:
     at: ~/repo
+aliases:
+  - &filter-only-master
+    branches:
+      only:
+        - master
 jobs:
   build-and-install-dependencies:
     working_directory: ~/repo
@@ -39,7 +44,6 @@ jobs:
       - checkout
       - run:
           name: Run tests
-          # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
           command: npm install test --passWithNoTests # replace with `yarn test` if using yarn
       - store_artifacts:
           path: test-results
@@ -112,10 +116,13 @@ workflows:
       - deploy-staging:
           requires:
             - unit-test
+            - security-scan
       - approve-deploy-to-production:
           type: approval
           requires:
             - deploy-staging
+          filters: *filter-only-master
       - deploy-production:
           requires:
             - approve-deploy-to-production
+          filters: *filter-only-master
