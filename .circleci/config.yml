@@ -1,123 +1,54 @@
-version: 2.1
+ version: 2.1
 
-aliases:
-  - &filter-only-master
-    branches:
-      only:
-        - master
-orbs:
-  heroku: circleci/heroku@1.0.1
+  orbs:
+    heroku: circleci/heroku@1.0.1
 
-
-attach-workspace: &attach-workspace
-  attach_workspace:
-    at: ~/repo
-
-jobs:
-  prepare-space:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout # special step to check out source code to working directory
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          keys:
-            - v1-repo-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install dependencies with NPM
-          command: npm install # replace with `yarn install` if using yarn
-      - save_cache: # special step to save the dependency cache
-          key: v1-repo-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
-#  security-scan:
-#    working_directory: ~/repo
-#    machine: true
-#    steps:
-#      - *attach-workspace
-#      - run:
-#          name: Security Scan with Hawkeye
-#          command: docker run --rm --name="hawkeye" -v $PWD:/target stono/hawkeye
-#
-  unit-test:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - run:
-          name: Running unit tests
-          command: |
-            npm install test
-      - store_artifacts:
-          path: test-results
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-                path: /tmp/app
-  build:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - run:
-          name: Package Application
-          command: |
-            yarn run build --yes
-            mkdir -p /tmp/app
-            cp -avR build/* /tmp/app
-            cp Procfile /tmp/app
-            cp .circleci/server.js /tmp/app
-            cp .circleci/package.json /tmp/app
-
-#  deploy-staging:
-#    working_directory: ~/repo
-#    machine: true
-#    steps:
-#      - checkout
-#      - run:
-#          name: Deploy frontend to staging
-#          command: |
-#            cd /tmp/app
-#            git config --global user.name "CircleCI"
-#            git init
-#            git add .
-#            git commit -m "Deploy"
-#            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master -f
-##          command: |
-##            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master
-#  deploy-production:
-#    working_directory: ~/repo
-#    machine: true
-#    steps:
-#      - checkout
-#      - run:
-#          name: Deploy frontend to production
-#          command: |
-#            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-workflows:
-  version: 2.1
-  build-and-test:
-    jobs:
-      - prepare-space
-#      - security-scan:
-#          requires:
-#            - checkout-install-dependencies
-      - unit-test:
-          requires:
-            - prepare-space
-      - build:
-          requires:
-            - unit-test
-#      - deploy-staging:
-#          requires:
-#            - unit-test
-#            - security-scan
-#      - approve-deploy-to-production:
-#          type: approval
-#          requires:
-#            - deploy-staging
-#          filters: *filter-only-master
-#      - deploy-production:
-#          requires:
-#            - approve-deploy-to-production
-#          filters: *filter-only-master
+  jobs:
+    build:
+      docker:
+        - image: circleci/node:10
+      steps:
+        - checkout # special step to check out source code to working directory
+        - restore_cache: # special step to restore the dependency cache
+            # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+            keys:
+              - v1-repo-{{ checksum "package-lock.json" }}
+        - run:
+            name: Install dependencies with NPM
+            command: npm install # replace with `yarn install` if using yarn
+        - save_cache: # special step to save the dependency cache
+            key: v1-repo-{{ checksum "package-lock.json" }}
+            paths:
+              - "node_modules"
+        - run:
+            name: Run tests
+            # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
+            command: npm test # replace with `yarn test` if using yarn
+        - run:
+            name: Package Application
+            command: |
+              yarn run build --yes
+              mkdir -p /tmp/app
+              cp -avR build/* /tmp/app
+              cp Procfile /tmp/app
+              cp .circleci/server.js /tmp/app
+              cp .circleci/package.json /tmp/app
+        - store_artifacts:
+            path: test-results
+        - store_test_results:
+            path: test-results
+        - store_artifacts:
+            path: /tmp/app
+        - run:
+            name: Deploy Master to Heroku
+            command: |
+              cd /tmp/app
+              git config --global user.name "CircleCI"
+              git init
+              git add .
+              git commit -m "Deploy"
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git master -f
+  workflows:
+    Build and Test:
+      jobs:
+        - build
