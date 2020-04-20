@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Run tests
           # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
-          command: npm test --passWithNoTests # replace with `yarn test` if using yarn
+          command: npm install test --passWithNoTests # replace with `yarn test` if using yarn
       - store_artifacts:
           path: test-results
       - store_test_results:
