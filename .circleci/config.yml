@@ -40,6 +40,7 @@ jobs:
 #          command: docker run --rm --name="hawkeye" -v $PWD:/target stono/hawkeye
 #
   unit-test:
+    working_directory: ~/repo
     docker:
       - image: circleci/node:10
     steps:
@@ -47,7 +48,7 @@ jobs:
       - run:
           name: Running unit tests
           command: |
-            npm install test
+            npm test
       - store_artifacts:
           path: test-results
       - store_test_results:
