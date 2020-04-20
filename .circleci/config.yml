@@ -28,10 +28,14 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-#      - run:
-#          name: Run tests
-#          # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
-#          command: npm test --passWithNoTests # replace with `yarn test` if using yarn
+      - run:
+          name: Run tests
+          # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
+          command: npm test --passWithNoTests # replace with `yarn test` if using yarn
+      - store_artifacts:
+          path: test-results
+            - store_test_results:
+                path: test-results
   package-application:
     working_directory: ~/repo
     docker:
@@ -41,15 +45,12 @@ jobs:
       - run:
           name: Package Application
           command: |
+            npm install
             yarn run build --yes
             mkdir -p /tmp/app
             cp -avR build/* /tmp/app
             cp .circleci/server.js /tmp/app
             cp .circleci/package.json /tmp/app
-      - store_artifacts:
-          path: test-results
-      - store_test_results:
-          path: test-results
       - store_artifacts:
           path: /tmp/app
   deploy-staging:
