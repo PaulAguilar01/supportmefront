@@ -68,7 +68,7 @@ jobs:
       - store_artifacts:
           path: /tmp/app
       - run:
-          name: Deploy Master to Heroku Staging
+          name: Deploy to Heroku Staging
           command: |
             cd /tmp/app
             git config --global user.name "CircleCI"
