@@ -22,6 +22,15 @@ jobs:
           key: v1-repo-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
+  security-scan:
+    working_directory: ~/repo
+    machine: true
+    steps:
+      - *attach-workspace
+      - run:
+          name: Security Scan with Hawkeye
+          command: docker run --rm --name="hawkeye" -v $PWD:/target stono/hawkeye
+
   unit-test:
     working_directory: ~/repo
     docker:
@@ -94,6 +103,9 @@ workflows:
   Build and Test:
     jobs:
       - build-and-install-dependencies
+      - security-scan:
+          requires:
+            - build-and-install-dependencies
       - unit-test:
           requires:
             - build-and-install-dependencies
