@@ -24,6 +24,8 @@ jobs:
             - "node_modules"
   unit-test:
     working_directory: ~/repo
+    docker:
+      - image: circleci/node:10
     steps:
       - checkout
       - run:
@@ -34,10 +36,7 @@ jobs:
           path: test-results
       - store_test_results:
           path: test-results
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - .
+
   deploy-staging:
     working_directory: ~/repo
     docker:
