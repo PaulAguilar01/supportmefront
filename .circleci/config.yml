@@ -34,8 +34,8 @@ jobs:
           command: npm test --passWithNoTests # replace with `yarn test` if using yarn
       - store_artifacts:
           path: test-results
-            - store_test_results:
-                path: test-results
+      - store_test_results:
+          path: test-results
   package-application:
     working_directory: ~/repo
     docker:
