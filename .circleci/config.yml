@@ -22,10 +22,6 @@ jobs:
           key: v1-repo-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - .
   unit-test:
     working_directory: ~/repo
     docker:
@@ -72,6 +68,17 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Package Application
+          command: |
+            npm install
+            yarn run build --yes
+            mkdir -p /tmp/app
+            cp -avR build/* /tmp/app
+            cp .circleci/server.js /tmp/app
+            cp .circleci/package.json /tmp/app
+            - store_artifacts:
+                path: /tmp/app
+      - run:
           name: Deploy Master to Heroku Staging
           command: |
             cd /tmp/app
@@ -87,6 +94,17 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Package Application
+          command: |
+            npm install
+            yarn run build --yes
+            mkdir -p /tmp/app
+            cp -avR build/* /tmp/app
+            cp .circleci/server.js /tmp/app
+            cp .circleci/package.json /tmp/app
+            - store_artifacts:
+                path: /tmp/app
+      - run:
           name: Deploy Master to Heroku Production
           command: |
             cd /tmp/app
@@ -100,12 +118,9 @@ workflows:
   Build and Test:
     jobs:
       - build-and-install-dependencies
-      - package-application:
-          requires:
-            - build-and-install-dependencies
       - deploy-staging:
           requires:
-            - package-application
+            - build-and-install-dependencies
       - approve-deploy-to-production:
           type: approval
           requires:
