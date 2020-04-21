@@ -121,8 +121,8 @@ workflows:
           type: approval
           requires:
             - deploy-staging
-#          filters: *filter-only-master
+          filters: *filter-only-master
       - deploy-production:
           requires:
             - approve-deploy-to-production
-#          filters: *filter-only-master
+          filters: *filter-only-master
